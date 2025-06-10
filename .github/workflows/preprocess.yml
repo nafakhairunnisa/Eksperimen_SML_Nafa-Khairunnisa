@@ -1,0 +1,16 @@
+name: Data Preprocessing
+on: [push]
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      - run: pip install pandas scikit-learn
+      - run: python preprocessing/automate_pafa-khairunnisa.py
+      - uses: actions/upload-artifact@v3
+        with:
+          name: processed-data
+          path: preprocessing/personality_preprocessing/
