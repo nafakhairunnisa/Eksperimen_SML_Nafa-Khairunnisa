@@ -1,5 +1,8 @@
 name: Data Preprocessing
-on: [push]
+on: 
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:    
 jobs:
   preprocess:
     runs-on: ubuntu-latest
