@@ -14,7 +14,7 @@ def preprocess_data():
         raise FileNotFoundError(f"Dataset not found at: {dataset_path}")
     
     # Load data
-    df = pd.read_csv('../personality_dataset.csv')
+    df = pd.read_csv('personality_dataset.csv')
     
     # Make copy and drop duplicates
     preparation_df = df.copy()
