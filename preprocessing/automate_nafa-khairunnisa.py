@@ -5,39 +5,52 @@ import os
 
 def preprocess_data():
     # Load data
-    df = pd.read_csv('personality_dataset.csv')
+    df = pd.read_csv('../personality_dataset.csv')
     
+    # Make copy and drop duplicates
     preparation_df = df.copy()
     preparation_df = preparation_df.drop_duplicates()
     
-    # Imputasi missing value
-    for col in preparation_df.select_dtypes(include='number'):
+    # Identify numerical and categorical columns
+    numerical_cols = preparation_df.select_dtypes(include=['int64', 'float64']).columns.tolist()
+    categorical_cols = preparation_df.select_dtypes(include=['object']).columns.tolist()
+    categorical_cols.remove('Personality')  # Exclude target column if it's categorical
+    
+    # Impute missing values
+    for col in numerical_cols:
         preparation_df[col].fillna(preparation_df[col].median(), inplace=True)
-    for col in preparation_df.select_dtypes(include='object'):
+    for col in categorical_cols:
         preparation_df[col].fillna(preparation_df[col].mode()[0], inplace=True)
     
-    # Standarisasi
-    for col in preparation_df.select_dtypes(include='float64'):
-        scaler = StandardScaler()
-        preparation_df[col] = scaler.fit_transform(preparation_df[col])
-
-    # Encoding
+    # Standardize numerical features
+    scaler = StandardScaler()
+    preparation_df[numerical_cols] = scaler.fit_transform(preparation_df[numerical_cols])
+    
+    # Encode categorical features
     le = LabelEncoder()
-    for col in preparation_df.select_dtypes(include='object'):
+    for col in categorical_cols:
         preparation_df[col] = le.fit_transform(preparation_df[col])
+    
+    # Encode target variable
+    preparation_df['Personality'] = le.fit_transform(preparation_df['Personality'])
     
     # Splitting
     X = preparation_df.drop('Personality', axis=1)
     y = preparation_df['Personality']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Simpan hasil
+    # Create output directory
     os.makedirs('preprocessing/personality_preprocessing', exist_ok=True)
-    preparation_df.to_csv('preprocessing/personality_preprocessing/personality_dataset_clean.csv', index=False)  # Nama file sesuai checklist
+    
+    # Save processed data
+    preparation_df.to_csv('preprocessing/personality_preprocessing/personality_dataset_clean.csv', index=False)
     X_train.to_csv('preprocessing/personality_preprocessing/X_train.csv', index=False)
     X_test.to_csv('preprocessing/personality_preprocessing/X_test.csv', index=False)
     y_train.to_csv('preprocessing/personality_preprocessing/y_train.csv', index=False)
     y_test.to_csv('preprocessing/personality_preprocessing/y_test.csv', index=False)
+    
+    print("Preprocessing completed successfully!")
+    print(f"Processed data saved to: preprocessing/personality_preprocessing/")
 
 if __name__ == "__main__":
     preprocess_data()
