@@ -5,7 +5,7 @@ import os
 
 def preprocess_data():
     # Load data
-    df = pd.read_csv('../personality_dataset.csv')
+    df = pd.read_csv('personality_dataset.csv')
     
     preparation_df = df.copy()
     preparation_df = preparation_df.drop_duplicates()
