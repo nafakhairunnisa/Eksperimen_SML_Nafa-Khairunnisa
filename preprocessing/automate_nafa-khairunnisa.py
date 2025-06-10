@@ -5,7 +5,7 @@ import os
 
 def preprocess_data():
     # Load data
-    df = pd.read_csv('..\personality_dataset.csv')
+    df = pd.read_csv('../personality_dataset.csv')
     
     preparation_df = df.copy()
     preparation_df = preparation_df.drop_duplicates()
@@ -32,12 +32,12 @@ def preprocess_data():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     # Simpan hasil
-    os.makedirs('preprocessing\personality_preprocessing', exist_ok=True)
-    preparation_df.to_csv('preprocessing\personality_preprocessing\personality_dataset_clean.csv', index=False)  # Nama file sesuai checklist
-    X_train.to_csv('preprocessing\personality_preprocessing\X_train.csv', index=False)
-    X_test.to_csv('preprocessing\personality_preprocessing\X_test.csv', index=False)
-    y_train.to_csv('preprocessing\personality_preprocessing\y_train.csv', index=False)
-    y_test.to_csv('preprocessing\personality_preprocessing\y_test.csv', index=False)
+    os.makedirs('preprocessing/personality_preprocessing', exist_ok=True)
+    preparation_df.to_csv('preprocessing/personality_preprocessing/personality_dataset_clean.csv', index=False)  # Nama file sesuai checklist
+    X_train.to_csv('preprocessing/personality_preprocessing/X_train.csv', index=False)
+    X_test.to_csv('preprocessing/personality_preprocessing/X_test.csv', index=False)
+    y_train.to_csv('preprocessing/personality_preprocessing/y_train.csv', index=False)
+    y_test.to_csv('preprocessing/personality_preprocessing/y_test.csv', index=False)
 
 if __name__ == "__main__":
     preprocess_data()
