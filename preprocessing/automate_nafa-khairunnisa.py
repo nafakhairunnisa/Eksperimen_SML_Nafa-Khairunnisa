@@ -2,12 +2,17 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 import os
+from pathlib import Path
+
+# Mendapatkan path absolut ke folder repo
+repo_root = Path(__file__).parent.parent
+dataset_path = repo_root / 'personality_dataset.csv'
 
 def preprocess_data():
-    # Cek file dataset
-    if not os.path.exists('../personality_dataset.csv'):
-        raise FileNotFoundError("Dataset file not found. Please ensure 'personality_dataset.csv' is in the same folder as this script.")
-
+    # Cek file dengan path absolut
+    if not dataset_path.exists():
+        raise FileNotFoundError(f"Dataset not found at: {dataset_path}")
+    
     # Load data
     df = pd.read_csv('../personality_dataset.csv')
     
