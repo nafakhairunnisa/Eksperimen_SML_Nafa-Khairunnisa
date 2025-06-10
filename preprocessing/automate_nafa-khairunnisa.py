@@ -4,6 +4,10 @@ from sklearn.model_selection import train_test_split
 import os
 
 def preprocess_data():
+    # Cek file dataset
+    if not os.path.exists('../personality_dataset.csv'):
+        raise FileNotFoundError("Dataset file not found. Please ensure 'personality_dataset.csv' is in the same folder as this script.")
+
     # Load data
     df = pd.read_csv('../personality_dataset.csv')
     
