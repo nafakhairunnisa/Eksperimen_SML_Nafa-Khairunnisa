@@ -18,7 +18,7 @@ def preprocess_data():
     # Identify numerical and categorical columns
     numerical_cols = preparation_df.select_dtypes(include=['int64', 'float64']).columns.tolist()
     categorical_cols = preparation_df.select_dtypes(include=['object']).columns.tolist()
-    categorical_cols.remove('Personality')  # Exclude target column if it's categorical
+    categorical_cols.remove('Personality')
     
     # Impute missing values
     for col in numerical_cols:
@@ -44,17 +44,17 @@ def preprocess_data():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     # Create output directory
-    os.makedirs('preprocessing/personality_preprocessing', exist_ok=True)
+    os.makedirs('personality_preprocessing', exist_ok=True)
     
     # Save processed data
-    preparation_df.to_csv('preprocessing/personality_preprocessing/personality_dataset_clean.csv', index=False)
-    X_train.to_csv('preprocessing/personality_preprocessing/X_train.csv', index=False)
-    X_test.to_csv('preprocessing/personality_preprocessing/X_test.csv', index=False)
-    y_train.to_csv('preprocessing/personality_preprocessing/y_train.csv', index=False)
-    y_test.to_csv('preprocessing/personality_preprocessing/y_test.csv', index=False)
+    preparation_df.to_csv('personality_preprocessing/personality_dataset_clean.csv', index=False)
+    X_train.to_csv('personality_preprocessing/X_train.csv', index=False)
+    X_test.to_csv('personality_preprocessing/X_test.csv', index=False)
+    y_train.to_csv('personality_preprocessing/y_train.csv', index=False)
+    y_test.to_csv('personality_preprocessing/y_test.csv', index=False)
     
     print("Preprocessing completed successfully!")
-    print(f"Processed data saved to: preprocessing/personality_preprocessing/")
+    print(f"Processed data saved to: personality_preprocessing/")
 
 if __name__ == "__main__":
     preprocess_data()
